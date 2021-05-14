@@ -5,16 +5,16 @@
 ## Queries
 
 1. Get all objects in todo list
-
-{
-    getAllTodos{
-        name
-        completed
-        date
-        id
+#
+    {
+        getAllTodos{
+            name
+            completed
+            date
+            id
+        }
     }
-}
-
+#
 2. Gets todo item based on id
 
 {
@@ -25,7 +25,7 @@
         id
     }
 }
-
+#
 3. All completed todos
 
 {
@@ -36,7 +36,7 @@
         id
     }
 }
-
+#
 4. Get all todo items that are not completed
 
 {
@@ -47,7 +47,7 @@
         id
     }
 }
-
+#
 5. Add new todo
 
 mutation{
@@ -58,7 +58,7 @@ mutation{
         id
     }
 }
-
+#
 6. Mark todo as complete
 
 mutation{
