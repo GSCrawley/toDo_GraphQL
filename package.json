@@ -1,0 +1,30 @@
+{
+  "name": "todo_graphql",
+  "version": "1.0.0",
+  "description": "simple todo graphql  backend server ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GSCrawley/toDo_GraphQL.git"
+  },
+  "keywords": [
+    "graphql",
+    "server",
+    "node.js"
+  ],
+  "author": "Gideon Crawley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GSCrawley/toDo_GraphQL/issues"
+  },
+  "homepage": "https://github.com/GSCrawley/toDo_GraphQL#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0"
+  }
+}
