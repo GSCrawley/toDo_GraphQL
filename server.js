@@ -6,7 +6,6 @@ const { buildSchema } = require('graphql');
 
 const schema = buildSchema(`
     type Todo {
-
         name: String!
         completed: Boolean!
         date: String!
@@ -25,10 +24,45 @@ const schema = buildSchema(`
 
 const toDoList = [];
 
-const resolvers ={
-    Query:{
-        info: ()=> `Todays Tasks`,
-        allToDos: async(parent, args,context)=>{            
-            return context.prisma.toDo.findMany();
-        }
+const root = {
+    getAllTodos: () => {
+        return todoList;
     },
+    getCompletedTodos: () => {
+        completed = [];
+        todoList.map((todo) => {
+            if (todo.completed) {
+                completed.push(todo);
+            }
+        })
+
+        return completed;
+    },
+    getActiveTodos: () => {
+        active = [];
+        todoList.map((todo) => {
+            if (todo.active) {
+                active.push(todo);
+            }
+        })
+
+        return active;
+    },
+    getTodo: ({ id }) => {
+        return todoList[id];
+    },
+    completeTodo: ({ id }) => {
+        todoList[id].completed = true;
+        const todo = todoList[id];
+
+        todoList.push(todo);
+
+        return todo;
+    },
+    addTodo: ({ name }) => {
+        const todo = { name, completed: false, date: new Date(), id: todoList.length };
+        todoList.push(todo);
+
+        return todo;
+    }
+}
