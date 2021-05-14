@@ -9,62 +9,73 @@ const schema = buildSchema(`
         name: String!
         completed: Boolean!
         date: String!
-        id: Int!
+        id: ID!
     }
     type Query {
         getAllTodos: [Todo!]!
-        getTodo(id: Int!): Todo!
+        getTodo(id: ID!): [Todo]!
         getCompletedTodos: [Todo!]!
+        notCompletedTodos: [Todo]
     }
     type Mutation {
-        addTodo(name: String!): Todo!
-        completeTodo(id: Int!): Todo!
+        addTodo(name: String!, completed: Boolean!, date: String!, id:Int!): Todo
+        completeTodo( id: Int!, completed: Boolean!): Todo
     }
-`)
+    `);
 
-const toDoList = [];
+
+const todoList = [ 
+    {
+        name :'laundry', 
+        completed : false, 
+        date:"5/14/21", 
+        id:1 
+    },
+    { 
+        name : 'finish S&L project',
+        completed: true,
+        date:"5/13/21", 
+        id:2 
+    },
+    { 
+        name: 'hand in Data Viz project',
+        completed: false,
+        date:"5/17/21", 
+        id:3,  
+    }
+]
 
 const root = {
     getAllTodos: () => {
         return todoList;
     },
-    getCompletedTodos: () => {
-        completed = [];
-        todoList.map((todo) => {
-            if (todo.completed) {
-                completed.push(todo);
-            }
-        })
-
-        return completed;
-    },
-    getActiveTodos: () => {
-        active = [];
-        todoList.map((todo) => {
-            if (todo.active) {
-                active.push(todo);
-            }
-        })
-
-        return active;
-    },
     getTodo: ({ id }) => {
-        return todoList[id];
+        return todoList.filter(item => item.id == id)
     },
-    completeTodo: ({ id }) => {
-        todoList[id].completed = true;
-        const todo = todoList[id];
 
-        todoList.push(todo);
+    getCompletedTodos: () => {
+        return todoList.filter(item => item.completed == true )
+    }, 
 
-        return todo;
+    notCompletedTodos: () => {
+        return todoList.filter(item => item.completed == false )
     },
-    addTodo: ({ name }) => {
-        const todo = { name, completed: false, date: new Date(), id: todoList.length };
-        todoList.push(todo);
 
-        return todo;
-    }
+    addTodo: ({ name, completed, date, id}) => {
+        const newTodo = { name, completed, date, id}
+        todoList.push(newTodo)
+        return newTodo
+    },
+
+    completeTodos: ({ id, completed }) => {
+        const completeList = todoList.filter(item => item.id == id)
+        if(completeList.length === 0){
+            return null
+        }
+        completeList[0].completed = completed
+        return completeList[0]
+    },
+    
 }
 
 const app = express();
